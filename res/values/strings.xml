@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RSSimple</string>
+    <string name="remove_feed">Remove Feed</string>
+    <string name="remove_all_feeds">Remove All Feeds</string>
+</resources>

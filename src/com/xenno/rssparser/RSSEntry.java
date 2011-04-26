@@ -3,6 +3,7 @@ package com.xenno.rssparser;
 public class RSSEntry {
 	private String title;
 	private String link;
+	private String description;
 
 	public void setTitle(String s) {
 		this.title = s;
@@ -18,6 +19,14 @@ public class RSSEntry {
 
 	public String getLink() {
 		return link;
+	}
+
+	public void setDescription(String s) {
+		this.description = s;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	public String toString() {

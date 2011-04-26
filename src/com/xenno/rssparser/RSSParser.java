@@ -28,29 +28,11 @@ public class RSSParser {
 		return (rh.getOutput());
 	}
 
-/*
-	public class RSSEntry {
-		private String title;
-		private String link;
-
-		public void setTitle(String s) {
-			this.title = s;
-		}
-
-		public void setLink(String s) {
-			this.link = s;
-		}
-
-		public String toString() {
-			return (this.title + " - " + this.link);
-		}
-	}
-*/
-
 	public class RSSHandler extends DefaultHandler {
 		private RSSEntry entry;
 		private String title;
 		private String link;
+		private String description;
 		private String element;
 		private ArrayList<RSSEntry> output;
 
@@ -59,6 +41,7 @@ public class RSSParser {
 			this.element = INVALID;
 			this.title = "";
 			this.link = "";
+			this.description = "";
 			this.output = new ArrayList<RSSEntry>();
 		}
 
@@ -69,7 +52,7 @@ public class RSSParser {
 		public void startElement(String uri, String name, String qName,
 				Attributes attrs) {
 
-			if (name.equals("title") || name.equals("link"))
+			if (name.equals("title") || name.equals("link") || name.equals("description"))
 				this.element = name;
 			else if (name.equals("item"))
 				this.entry = new RSSEntry();
@@ -85,6 +68,8 @@ public class RSSParser {
 				this.entry.setTitle(this.title);
 			else if (name.equals("link") && "link".equals(this.element))
 				this.entry.setLink(this.link);
+			else if (name.equals("description") && "description".equals(this.element))
+				this.entry.setDescription(this.description);
 			else if (name.equals("item"))
 				this.output.add(this.entry);
 				/*
@@ -102,6 +87,9 @@ public class RSSParser {
 				}
 				else if ("link".equals(this.element)) {
 					this.link = new String(ch, start, length);
+				}
+				else if ("description".equals(this.element)) {
+					this.description = new String(ch, start, length);
 				}
 			}
 		}

@@ -24,13 +24,10 @@ public class RSSimple extends ListActivity
 	ArrayAdapter<String> aa;
 	File file;
 	RSSimpleFeedList feeds;
+	ListActivity activity = this;
 
 	private void loadFeeds() {
-		String state = Environment.getExternalStorageState();
-
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			feeds.getFeeds();
-		}
+		feeds.getFeeds();
 
 		ArrayList<String> feed_list = new ArrayList<String>();
 		feed_list.add("Add new entry...");
@@ -53,14 +50,7 @@ public class RSSimple extends ListActivity
 	{
 		super.onCreate(savedInstanceState);
 
-		String state = Environment.getExternalStorageState();
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			file = new File(getExternalFilesDir(null), "RSSimpleFeeds.txt");
-		} else {
-			file = null;
-		}
-
-		feeds = new RSSimpleFeedList(file);
+		feeds = new RSSimpleFeedList(activity);
 		loadFeeds();
 
 		final Intent intent = new Intent(this, RSSimpleFeed.class);

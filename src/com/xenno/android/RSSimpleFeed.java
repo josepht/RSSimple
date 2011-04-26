@@ -31,7 +31,7 @@ public class RSSimpleFeed extends ListActivity
 	private String data;
 	ArrayAdapter<RSSEntry> aa;
 	ArrayList<RSSEntry> feed_entries;
-	File file;
+	ListActivity activity = this;
 
 	public RSSimpleFeed() throws Exception {
 		parser = new RSSParser();
@@ -69,14 +69,14 @@ public class RSSimpleFeed extends ListActivity
 	}
 
 	private void remove_feed(String feed_url) {
-		RSSimpleFeedList feed_list = new RSSimpleFeedList(file);
+		RSSimpleFeedList feed_list = new RSSimpleFeedList(activity);
 		feed_list.getFeeds();
 		feed_list.removeFeed(feed_url);
 		this.finish();
 	}
 
 	private void remove_all_feeds() {
-		RSSimpleFeedList feed_list = new RSSimpleFeedList(file);
+		RSSimpleFeedList feed_list = new RSSimpleFeedList(activity);
 		feed_list.getFeeds();
 		feed_list.removeAllFeeds();
 		this.finish();
@@ -89,13 +89,6 @@ public class RSSimpleFeed extends ListActivity
         super.onCreate(savedInstanceState);
 
 	final Intent intent = getIntent();
-
-	String state = Environment.getExternalStorageState();
-	if (Environment.MEDIA_MOUNTED.equals(state)) {
-		file = new File(getExternalFilesDir(null), "RSSimpleFeeds.txt");
-	} else {
-		file = null;
-	}
 
 	try {
 		url = new URL(intent.getStringExtra("url"));

@@ -34,50 +34,12 @@ public class RSSimpleFeedAdd extends Activity
 		add_button.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				boolean mExternalStorageAvailable = false;
-				boolean mExternalStorageWriteable = false;
-				String state = Environment.getExternalStorageState();
-
-				if (Environment.MEDIA_MOUNTED.equals(state)) {
-					// We can read and write the media
-					mExternalStorageAvailable = mExternalStorageWriteable = true;
-				} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-					// We can only read the media
-					mExternalStorageAvailable = true;
-					mExternalStorageWriteable = false;
-				} else {
-					// Something else is wrong. It may be one of many other states, but all we need
-					//  to know is we can neither read nor write
-					mExternalStorageAvailable = mExternalStorageWriteable = false;
-				}
-
-				if (mExternalStorageAvailable && mExternalStorageWriteable)
-				{
-
-					File file = new File(getExternalFilesDir(null), "RSSimpleFeeds.txt");
-					RSSimpleFeedList feed_list = new RSSimpleFeedList(file);
-					feed_list.getFeeds();
-					TextView tv = (TextView) findViewById(R.id.new_feed);
-					String feed = tv.getText().toString();
-					feed_list.addFeed(tv.getText().toString());
-					activity.finish();
-/*
-					try {
-						OutputStream os = new FileOutputStream(file, true);
-						TextView tv = (TextView) findViewById(R.id.new_feed);
-						String feed = tv.getText().toString();
-						byte[] buf = new String(feed + "\n").getBytes();
-						// XXX: check URL and such here
-						os.write(buf);
-						os.close();
-						activity.finish();
-					} catch (FileNotFoundException e) {
-						Log.w("ExternalStorage", "Can't find " + file, e);
-					} catch (IOException e) {
-						Log.w("ExternalStorage", "Error writing " + file, e);
-					}
-*/
-				}
+				RSSimpleFeedList feed_list = new RSSimpleFeedList(activity);
+				feed_list.getFeeds();
+				TextView tv = (TextView) findViewById(R.id.new_feed);
+				String feed = tv.getText().toString();
+				feed_list.addFeed(tv.getText().toString());
+				activity.finish();
 			}
 		});
 	}
